@@ -25,9 +25,9 @@ public:
 	T removeFirst();
 	void getFirst() const; // TODO
 
-	void addLast(T newElem); // TODO
-	T removeLast(); // TODO
-	void getLast();
+	void addLast(T newElem);
+	T removeLast();
+	void getLast(); // TODO
 
 	void print() const {
 		if (isEmpty()) 
