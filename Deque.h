@@ -45,6 +45,9 @@ public:
 	void turnToNotActiveMode();
 };
 
+/// Capacity == 0 (default) ... unallocated memory for the deque's buffer
+///
+/// ELSE allocates memory for the buffer and set appropriate position for head
 template <typename T>
 Deque<T>::Deque(size_t capacity) {
 	if (capacity == 0) 
@@ -54,6 +57,9 @@ Deque<T>::Deque(size_t capacity) {
 	headIndex = capacity / 2;
 }
 
+/// If yet not allocated memory for buffer ... allocate memory and add element
+/// Resize if there is no space for adding to head
+/// ELSE just adds new head to deque
 template <typename T>
 void Deque<T>::addFirst(T newElem) {
 	assert(newElem != NULL);
@@ -75,6 +81,9 @@ void Deque<T>::addFirst(T newElem) {
 	++size;
 }
 
+/// Removes from head of the deque and returns it
+/// If deque is empty ... NULL is returned
+/// If there is only one element ... deque is setToNotActiveMode (deletes the allocated memory)
 template <typename T>
 T Deque<T>::removeFirst() {
 	T removedElement;
@@ -93,6 +102,9 @@ T Deque<T>::removeFirst() {
 	return removedElement;
 }
 
+/// If not allocated memory for deque's buffer ... allocate some memory and adds newElem
+/// If no space for adding to tail ... resize and add newElem
+/// ELSE just adds newElem
 template <typename T>
 void Deque<T>::addLast(T newElem) {
 	assert(newElem);
@@ -120,6 +132,9 @@ void Deque<T>::addLast(T newElem) {
 	++size;
 }
 
+/// Removes element from tail and returns it
+/// If deque's empty, NULL is returned
+/// If there is only one element, returns it and set deque to notActiveMode(deletes allocated memory)
 template <typename T>
 T Deque<T>::removeLast() {
 	T removedElement;
@@ -137,6 +152,9 @@ T Deque<T>::removeLast() {
 	return removedElement;
 }
 
+/// Allocates 2 * larger memory for deque's buffer
+/// 
+/// Saves 'old' elements in the middle of the new buffer
 template <typename T>
 void Deque<T>::resize() {
 	int newCapacity = resizeCoeff * size;
@@ -160,6 +178,7 @@ void Deque<T>::resize() {
 	capacity = newCapacity;
 }
 
+/// Returns index of the tail
 template <typename T>
 size_t Deque<T>::getTailIndex() const {
 	assert(size > 0); // or throw exception ?
@@ -172,11 +191,15 @@ bool Deque<T>::isEmpty() const {
 	return size == 0;
 }
 
+/// Deque is in notActiveMode (not allocated memory for buffer)
 template <typename T>
 bool Deque<T>::notAllocatedMemory() const {
 	return !buffer; // && capacity == 0 && size == 0 && headIndex == 0
 }
 
+/// Allocate memory for deque initialized with default constructor
+///
+/// Allocate memory for deque which is in notActiveMode
 template <typename T>
 void Deque<T>::allocateSomeMemory() {
 	const short defaultMemoryAllocation = 3;
@@ -187,6 +210,9 @@ void Deque<T>::allocateSomeMemory() {
 	size = 0; // Not needed maybe. It is expected to be this value
 }
 
+/// Deletes the allocated memory
+///
+/// Set all the private members to their default values
 template <typename T>
 void Deque<T>::turnToNotActiveMode() {
 	delete[] buffer;
