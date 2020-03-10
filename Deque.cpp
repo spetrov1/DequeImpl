@@ -1,9 +1,13 @@
 // Deque.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
+
+
 #include <iostream>
 #include <cassert>
 #include "Deque.h"
+
+// Not appropriate name of the file
 
 // tests
 /*
@@ -101,11 +105,62 @@ bool removeTwoElementsFromDeque() {
     d.print();
 }
 
+bool addLastToDequeWithNotAllocatedMemory() {
+    Deque<int> d;
+    d.addLast(1);
+    d.print();
+
+    // TODO
+}
+
+bool addLastMultipleTimesToDequeWithNotAllocatedMemory() {
+    Deque<int> d;
+    d.addLast(1);
+    d.addLast(2);
+    d.addLast(3);
+
+    d.print();
+
+    // TODO
+}
+
+bool removeLastFromDequeOneElementSize() {
+    Deque<int> d;
+    d.addFirst(1);
+
+    d.removeLast();
+
+    // TODO
+}
+
+bool removeLastAndAfterThatAddSomeElements() {
+    Deque<int> d;
+    d.addFirst(1);
+    d.removeLast();
+
+    d.addLast(2);
+    d.addFirst(1);
+    d.addFirst(-100);
+    d.addFirst(-200);
+    d.print();
+
+    // TODO
+}
+
 */
 
 int main()
 {   
+    Deque<int> d;
+    d.addFirst(1);
+
+    std::cout << d.removeLast() << std::endl;
     
+    d.addLast(2);
+    d.addFirst(1);
+    d.addFirst(-100);
+    d.addFirst(-200);
+    d.print();
    
 }
 

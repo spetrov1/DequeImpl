@@ -1,5 +1,7 @@
 #pragma once
 
+/// Add documentation
+
 template <class T>
 class Deque
 {
@@ -16,8 +18,12 @@ public:
 	Deque(size_t capacity = 0);
 
 	void addFirst(T newElem);
-	T removeFirst(); // TODO
+	T removeFirst();
 	void getFirst() const; // TODO
+
+	void addLast(T newElem); // TODO
+	T removeLast(); // TODO
+	void getLast();
 
 	void print() const {
 		if (isEmpty()) 
@@ -50,7 +56,7 @@ Deque<T>::Deque(size_t capacity) {
 
 template <typename T>
 void Deque<T>::addFirst(T newElem) {
-	assert(newElem);
+	assert(newElem != NULL);
 
 	if (notAllocatedMemory()) {
 		allocateSomeMemory();
@@ -84,6 +90,50 @@ T Deque<T>::removeFirst() {
 		turnToNotActiveMode(); // default init values for deque
 	}
 
+	return removedElement;
+}
+
+template <typename T>
+void Deque<T>::addLast(T newElem) {
+	assert(newElem);
+	size_t newTailIndex;
+
+	if (notAllocatedMemory()) {
+		allocateSomeMemory();
+		newTailIndex = headIndex;
+	}
+	else if (isEmpty()) { // empty but yet allocated memory
+		headIndex = capacity / 2; // Not needed maybe
+		newTailIndex = headIndex;
+	}
+	else { // is not empty deque
+		newTailIndex = getTailIndex();
+		if (newTailIndex == capacity - 1) {
+			resize();
+			newTailIndex = getTailIndex(); // tail index after resize
+		}
+		++newTailIndex;
+	}
+	assert(newTailIndex); // is it okay ?
+
+	buffer[newTailIndex] = newElem;
+	++size;
+}
+
+template <typename T>
+T Deque<T>::removeLast() {
+	T removedElement;
+	size_t tailIndex;
+	if (isEmpty()) {
+		// TODO throw exception ?
+		return NULL;
+	}
+	tailIndex = getTailIndex();
+	removedElement = buffer[tailIndex];
+	--size;
+	if (size == 0) {
+		turnToNotActiveMode();
+	}
 	return removedElement;
 }
 
