@@ -14,8 +14,12 @@ private:
 	const short resizeCoeff = 2;
 
 	void resize();
+	// TODO void copyFrom(const Deque&);
 public:
 	Deque(size_t capacity = 0);
+	// TODO copy constructor
+	// TODO operator=
+	// TODO destructor
 
 	void addFirst(T newElem);
 	T removeFirst();
