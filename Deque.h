@@ -16,6 +16,8 @@ public:
 	Deque(size_t capacity = 0);
 
 	void addFirst(T newElem);
+	T removeFirst(); // TODO
+	void getFirst() const; // TODO
 
 	void print() const {
 		if (isEmpty()) 
@@ -34,6 +36,7 @@ public:
 	bool isEmpty() const;
 	bool notAllocatedMemory() const;
 	void allocateSomeMemory();
+	void turnToNotActiveMode();
 };
 
 template <typename T>
@@ -64,6 +67,24 @@ void Deque<T>::addFirst(T newElem) {
 	}
 	buffer[headIndex] = newElem;
 	++size;
+}
+
+template <typename T>
+T Deque<T>::removeFirst() {
+	T removedElement;
+	
+	if (isEmpty()) {
+		// or throw exception?
+		return NULL;
+	}
+	removedElement = buffer[headIndex];
+	++headIndex;
+	--size;
+	if (headIndex == 0) {
+		turnToNotActiveMode(); // default init values for deque
+	}
+
+	return removedElement;
 }
 
 template <typename T>
@@ -114,4 +135,11 @@ void Deque<T>::allocateSomeMemory() {
 	capacity = defaultMemoryAllocation;
 	headIndex = capacity / 2;
 	size = 0; // Not needed maybe. It is expected to be this value
+}
+
+template <typename T>
+void Deque<T>::turnToNotActiveMode() {
+	delete[] buffer;
+	capacity = size = headIndex = 0;
+	buffer = nullptr;
 }

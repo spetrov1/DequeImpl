@@ -49,23 +49,64 @@ bool addFirstMultipleTimesDequeInitializedNotAllocatedMemory() {
 
     // TODO
 }
+bool addFirstToDequeInitializedWith4Capacity() {
+    Deque<int> deq(4);
+    deq.addFirst(1);
+
+    // TODO
+}
+
+bool addFirstMultipleTimesToDequeInitializedWith4Capacity() {
+    Deque<int> deq(4);
+    deq.addFirst(1);
+    deq.addFirst(2);
+    deq.addFirst(3);
+    deq.addFirst(4);
+
+    // TODO
+}
+
+bool removeFromDequeWithOneSizeAndCapacity() {
+    Deque<int> d(1);
+    d.addFirst(1);
+    d.removeFirst();
+
+    // TODO
+}
+bool RemoveTheOneAndOnlyElementOfDequeAndAfterThatAddFirst() {
+    Deque<int> d(1);
+    d.addFirst(1);
+    d.print();
+
+    std::cout << d.removeFirst() << std::endl;
+
+    d.print();
+
+    d.addFirst(2);
+    d.print();
+
+    // TODO
+}
+
+bool removeTwoElementsFromDeque() {
+    Deque<int> d(1);
+    d.addFirst(1);
+    d.addFirst(2);
+    d.print();
+
+    int el;
+    while (el = d.removeFirst()) {
+        std::cout << el << " ";
+    }
+    d.print();
+}
 
 */
 
 int main()
 {   
-
-    Deque<int> deq(4);
-    deq.addFirst(1);
-    deq.print();
     
-    deq.addFirst(2);
-    deq.print();
-
-    deq.addFirst(3);
-    deq.addFirst(4);
-
-    deq.print();
+   
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
