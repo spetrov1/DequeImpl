@@ -14,20 +14,21 @@ private:
 	const short resizeCoeff = 2;
 
 	void resize();
-	// TODO void copyFrom(const Deque&);
+	void copyFrom(const Deque&);
+	void deleteDynamicMemory();
 public:
 	Deque(size_t capacity = 0);
-	// TODO copy constructor
-	// TODO operator=
-	// TODO destructor
+	Deque(const Deque&);
+	Deque& operator=(const Deque&);
+	~Deque();
 
 	void addFirst(T newElem);
-	T removeFirst();
-	void getFirst() const; // TODO
+	T removeFirst(); // TODO throw exception
+	void getFirst() const; // TODO, throw exception
 
 	void addLast(T newElem);
 	T removeLast();
-	void getLast(); // TODO
+	void getLast(); // TODO throw exception
 
 	void print() const {
 		if (isEmpty()) 
@@ -48,6 +49,49 @@ public:
 	void allocateSomeMemory();
 	void turnToNotActiveMode();
 };
+
+template <typename T>
+Deque<T>::~Deque() {
+	deleteDynamicMemory();
+}
+
+template <typename T>
+void Deque<T>::deleteDynamicMemory() {
+	delete[] buffer;
+}
+
+template <typename T>
+Deque<T>& Deque<T>::operator=(const Deque& other) {
+	if (this != &other) {
+		deleteDynamicMemory();
+		copyFrom(other);
+	}
+	return *this;
+}
+
+/// Copy constructor
+template <typename T>
+Deque<T>::Deque(const Deque& other) {
+	copyFrom(other);
+}
+
+/// Function used in copy constructor and operator=
+/// 
+/// Clone other deque to this deque
+template <typename T>
+void Deque<T>::copyFrom(const Deque& other) {
+	this->buffer = new T[other.capacity]; // may throw ?
+
+	size_t firstElementIndex = other.headIndex;
+	size_t lastElementIndex = other.headIndex + other.size - 1;
+	for (size_t i = firstElementIndex; i <= lastElementIndex; ++i) {
+		this->buffer[i] = other.buffer[i];
+	}
+
+	this->capacity = other.capacity;
+	this->size = other.size;
+	this->headIndex = other.headIndex;
+}
 
 /// Capacity == 0 (default) ... unallocated memory for the deque's buffer
 ///
@@ -174,7 +218,7 @@ void Deque<T>::resize() {
 
 	// Try to isolate the assigning in other function
 	buffer = new T[newCapacity]; // TODO may throw bad_alloc
-	for (int i = 0; i < size; ++i) {
+	for (size_t i = 0; i < size; ++i) {
 		buffer[newHeadIndex + i] = temp[headIndex + i];
 	}
 

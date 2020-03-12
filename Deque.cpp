@@ -151,17 +151,33 @@ bool removeLastAndAfterThatAddSomeElements() {
 
 int main()
 {   
-    Deque<int> d;
+    Deque<int> d(2);
+    d.addFirst(1);
+    d.addLast(2);
+    d.print();
+    d.removeFirst();
+    d.removeFirst();
+
+    d.addLast(100);
+    d.addLast(109);
+    d.addFirst(9);
     d.addFirst(1);
 
-    std::cout << d.removeLast() << std::endl;
-    
-    d.addLast(2);
-    d.addFirst(1);
-    d.addFirst(-100);
-    d.addFirst(-200);
     d.print();
+
+    // test of operator=
+    Deque<int> d2;
+    d2 = d;
+    d2.print();
+    int el;
+    while (el = d2.removeFirst()) {
+        std::cout << el << " ";
+    } 
+    std::cout << '\n';
    
+    d2.addLast(-100);
+    d2.addFirst(55);
+    d2.print();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
